@@ -1,5 +1,5 @@
-import { requiredColumns } from '@/app/(dashboard)/transactions/_components/import-card/import-card.const';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { requiredColumns } from '@/features/transactions/components/import-transactions-card/import-transactions-card.const';
 import { cn } from '@/lib/utils';
 
 type Props = {
@@ -8,7 +8,7 @@ type Props = {
   onChange: (columnIndex: number, value: string | null) => void;
 };
 
-export function ImportTableHeadSelect({ columnIndex, selectedColumns, onChange }: Props) {
+export function ImportTransactionsTableHeadSelect({ columnIndex, selectedColumns, onChange }: Props) {
   const currentSelection = selectedColumns?.[`column_${columnIndex}`] ?? null;
 
   return (

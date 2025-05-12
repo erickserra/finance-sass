@@ -1,4 +1,5 @@
 'use client';
+
 import { useState } from 'react';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -14,7 +15,7 @@ import { useBulkDeleteTransactions } from '@/features/transactions/api/use-bulk-
 import { useGetTransactions } from '@/features/transactions/api/use-get-transactions';
 import { UploadTransactions } from '@/app/(dashboard)/transactions/_components/upload-transactions/upload-transactions';
 import { UploadResults } from '@/app/(dashboard)/transactions/_components/upload-transactions/upload-transactions.type';
-import { ImportCard } from '@/app/(dashboard)/transactions/_components/import-card/import-card';
+import { ImportTransactionsCard } from '@/features/transactions/components/import-transactions-card/import-transactions-card';
 
 enum VARIANTS {
   LIST = 'LIST',
@@ -24,12 +25,11 @@ enum VARIANTS {
 const INITIAL_IMPORT_RESULTS = {
   data: [],
   errors: [],
-  meta: {},
 };
 
 export default function TransactionsPage() {
   const [variant, setVariant] = useState<VARIANTS>(VARIANTS.LIST);
-  const [importResults, setImportResults] = useState<UploadResults>({ data: [], erros: [], meta: {} });
+  const [importResults, setImportResults] = useState<Omit<UploadResults, 'meta'>>({ data: [], errors: [] });
 
   const { onOpen } = useNewTransactionSheetStore();
   const transactionsQuery = useGetTransactions();
@@ -66,9 +66,9 @@ export default function TransactionsPage() {
 
   if (variant === VARIANTS.IMPORT) {
     return (
-      <>
-        <ImportCard data={importResults.data} onCancel={onCancelUpload} onSubmit={() => {}} />
-      </>
+      <div className="max-w-screen-2xl mx-auto w-full pb-0 -mt-24">
+        <ImportTransactionsCard data={importResults.data} onCancel={onCancelUpload} onSubmit={() => {}} />
+      </div>
     );
   }
 
